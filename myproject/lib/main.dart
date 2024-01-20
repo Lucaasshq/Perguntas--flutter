@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import './questao.dart';
 import 'resposta.dart';
@@ -15,6 +17,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     final List<Map<String, Object>> perguntas = [
@@ -31,15 +34,20 @@ class _PerguntaAppState extends State<PerguntaApp> {
         'resposta': ['Maria', 'João', 'Leo', 'Pedro']
       }
     ];
+    List<String> respostas = perguntas[_perguntaSelecionada].cast()['resposta'];
+    List<Widget> widgtes = [];
+
+    for (var textoResp in respostas) {
+      respostas.add(Resposta(textoResp, responder) as String);
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text("Quiz")),
         body: Column(
           children: <Widget>[
             Questao(perguntas[_perguntaSelecionada]['texto'].toString()),
-            Resposta('Gato', responder),
-            Resposta('Cachorro', responder),
-            Resposta('Lontra', responder),
+            ...widgtes,
           ],
         ),
       ),
