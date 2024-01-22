@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import './questao.dart';
 import 'resposta.dart';
@@ -8,30 +9,39 @@ main() {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
+  final List<Map<String, Object>> _perguntas = const [
+    {
+      'texto': 'Qual é a sua cor favorita?',
+      'resposta': ['Preto', 'Vermelho', 'Branco', 'Verde']
+    },
+    {
+      'texto': 'Qual é o seu animal favorito?',
+      'resposta': ['Coelho', 'Cobra', 'Elefante', 'Leão']
+    },
+    {
+      'texto': 'Qual é o seu instrutor favorito?',
+      'resposta': ['Maria', 'João', 'Leo', 'Pedro']
+    }
+  ];
 
   void responder() {
     setState(() {
       _perguntaSelecionada++;
     });
+    if (kDebugMode) {
+      print(temPerguntaSelecionada);
+    }
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> perguntas = [
-      {
-        'texto': 'Qual é a sua cor favorita?',
-        'resposta': ['Preto', 'Vermelho', 'Branco', 'Verde']
-      },
-      {
-        'texto': 'Qual é o seu animal favorito?',
-        'resposta': ['Coelho', 'Cobra', 'Elefante', 'Leão']
-      },
-      {
-        'texto': 'Qual é o seu instrutor favorito?',
-        'resposta': ['Maria', 'João', 'Leo', 'Pedro']
-      }
-    ];
-    List<String> respostas = perguntas[_perguntaSelecionada].cast()['resposta'];
+    List<String> respostas = temPerguntaSelecionada
+        ? _perguntas[_perguntaSelecionada].cast()['resposta']
+        : [];
 
 /*     for (var textoResp in respostas) {
       respostas.add(Resposta(textoResp, responder));
@@ -40,12 +50,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text("Quiz")),
-        body: Column(
+        body: temPerguntaSelecionada ? Column(
           children: <Widget>[
-            Questao(perguntas[_perguntaSelecionada]['texto'].toString()),
+            Questao(_perguntas[_perguntaSelecionada]['texto'].toString()),
             ...respostas.map((texto) => Resposta(texto, responder)),
           ],
-        ),
+        ): null,
       ),
     );
   }
