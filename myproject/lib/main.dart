@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myproject/resultado.dart';
 import './questao.dart';
 import 'resposta.dart';
 
@@ -24,11 +25,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
   ];
 
   void responder() {
-    if(temPerguntaSelecionada) {
+    if (temPerguntaSelecionada) {
       setState(() {
-      _perguntaSelecionada++;
-    });}
-
+        _perguntaSelecionada++;
+      });
+    }
   }
 
   bool get temPerguntaSelecionada {
@@ -47,14 +48,16 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text("Quiz")),
-        body: temPerguntaSelecionada ? Column(
-          children: <Widget>[
-            Questao(_perguntas[_perguntaSelecionada]['texto'].toString()),
-            ...respostas.map((texto) => Resposta(texto, responder)),
-          ],
-        ): null,
-      ),
+          appBar: AppBar(title: const Text("Quiz")),
+          body: temPerguntaSelecionada
+              ? Column(
+                  children: <Widget>[
+                    Questao(
+                        _perguntas[_perguntaSelecionada]['texto'].toString()),
+                    ...respostas.map((texto) => Resposta(texto, responder)),
+                  ],
+                )
+              : const Resultado()),
     );
   }
 }
