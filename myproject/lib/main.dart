@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import './questao.dart';
 import 'resposta.dart';
@@ -25,12 +24,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
   ];
 
   void responder() {
-    setState(() {
+    if(temPerguntaSelecionada) {
+      setState(() {
       _perguntaSelecionada++;
-    });
-    if (kDebugMode) {
-      print(temPerguntaSelecionada);
-    }
+    });}
+
   }
 
   bool get temPerguntaSelecionada {
