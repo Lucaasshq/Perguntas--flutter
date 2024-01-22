@@ -1,30 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:myproject/resultado.dart';
-import './questao.dart';
-import 'resposta.dart';
+import 'questionario.dart';
 
 main() {
   runApp(const PerguntaApp());
 }
 
+var _perguntaSelecionada = 0;
+
 class _PerguntaAppState extends State<PerguntaApp> {
-  var _perguntaSelecionada = 0;
   final List<Map<String, Object>> _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita?',
-      'resposta': ['Preto', 'Vermelho', 'Branco', 'Verde']
+      'resposta': [
+        {'texto': 'Preto', 'nota': 10},
+        {'texto': 'Vermelh', 'nota': 5},
+        {'texto': 'Branco', 'nota': 3},
+        {'texto': 'Verde', 'nota': 1}
+      ]
     },
     {
       'texto': 'Qual é o seu animal favorito?',
-      'resposta': ['Coelho', 'Cobra', 'Elefante', 'Leão']
+      'resposta': [
+        {'texto': 'Coelho', 'nota': 10},
+        {'texto': 'Cobra', 'nota': 5},
+        {'texto': 'Elefante', 'nota': 3},
+        {'texto': 'Leão', 'nota': 1},
+      ]
     },
     {
       'texto': 'Qual é o seu instrutor favorito?',
-      'resposta': ['Maria', 'João', 'Leo', 'Pedro']
+      'resposta': [
+        {'texto': 'Leo', 'nota': 10},
+        {'texto': 'Maria', 'nota': 5},
+        {'texto': 'João', 'nota': 3},
+        {'texto': 'Pedro', 'nota': 1},
+      ]
     }
   ];
 
-  void responder() {
+  void _responder() {
     if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
@@ -38,26 +53,24 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> respostas = temPerguntaSelecionada
-        ? _perguntas[_perguntaSelecionada].cast()['resposta']
-        : [];
-
 /*     for (var textoResp in respostas) {
       respostas.add(Resposta(textoResp, responder));
     } */
 
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(title: const Text("Quiz")),
-          body: temPerguntaSelecionada
-              ? Column(
-                  children: <Widget>[
-                    Questao(
-                        _perguntas[_perguntaSelecionada]['texto'].toString()),
-                    ...respostas.map((texto) => Resposta(texto, responder)),
-                  ],
-                )
-              : const Resultado()),
+        appBar: AppBar(
+          title: const Text("Quiz"),
+          backgroundColor: Colors.blue,
+        ),
+        body: temPerguntaSelecionada
+            ? Questionario(
+                perguntas: _perguntas,
+                perguntaSelecionada: _perguntaSelecionada,
+                responder: _responder,
+              )
+            : const Resultado(),
+      ),
     );
   }
 }
