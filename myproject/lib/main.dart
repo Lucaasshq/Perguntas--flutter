@@ -1,3 +1,6 @@
+
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject/resultado.dart';
 import 'questionario.dart';
@@ -47,7 +50,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
         _pontuacaoTotal += pontuacao;
       });
     }
-    
+    if (kDebugMode) {
+      print(_pontuacaoTotal);
+    }
   }
 
   bool get temPerguntaSelecionada {
@@ -72,7 +77,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 perguntaSelecionada: _perguntaSelecionada,
                 quandoResponder: _responder,
               )
-            : const Resultado(),
+            :  Resultado(_pontuacaoTotal),
       ),
     );
   }
