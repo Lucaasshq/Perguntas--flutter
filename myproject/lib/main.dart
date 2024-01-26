@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject/resultado.dart';
@@ -18,7 +16,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
       'texto': 'Qual é a sua cor favorita?',
       'resposta': [
         {'texto': 'Preto', 'pontuacao': 10},
-        {'texto': 'Vermelh', 'pontuacao': 5},
+        {'texto': 'Vermelho', 'pontuacao': 5},
         {'texto': 'Branco', 'pontuacao': 3},
         {'texto': 'Verde', 'pontuacao': 1}
       ]
@@ -55,6 +53,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
     }
   }
 
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
+  }
+
   bool get temPerguntaSelecionada {
     return _perguntaSelecionada < _perguntas.length;
   }
@@ -68,7 +73,8 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Quiz"),
+          title: const Text("Quiz",
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
           backgroundColor: Colors.blue,
         ),
         body: temPerguntaSelecionada
@@ -77,7 +83,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 perguntaSelecionada: _perguntaSelecionada,
                 quandoResponder: _responder,
               )
-            :  Resultado(_pontuacaoTotal),
+            : Resultado(_pontuacaoTotal, _reiniciarQuestionario),
       ),
     );
   }
