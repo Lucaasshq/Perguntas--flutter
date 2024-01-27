@@ -73,8 +73,10 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Quiz",
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
+          title: const Text(
+            "Quiz",
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          ),
           backgroundColor: Colors.blue,
         ),
         body: temPerguntaSelecionada
